@@ -78,8 +78,19 @@ pipeline {
             steps{
                 withKubeConfig(caCertificate: '', clusterName: 'devops', contextName: '', credentialsId: 'kube-cred', namespace: 'webapps', restrictKubeConfigAccess: false, serverUrl: 'https://599766FAA04347FAB9F3C4D1EB40D8DC.gr7.us-east-1.eks.amazonaws.com') {
                     sh ' kubectl apply -f ds.yml -n webapps'
-}
+                    sleep 60
+                }
             }
         }
+        stage('verify k8s resorces in webapps'){
+            steps{
+                withKubeConfig(caCertificate: '', clusterName: 'devops', contextName: '', credentialsId: 'kube-cred', namespace: 'webapps', restrictKubeConfigAccess: false, serverUrl: 'https://599766FAA04347FAB9F3C4D1EB40D8DC.gr7.us-east-1.eks.amazonaws.com') {
+                    sh ' kubectl get svc -n webapps'
+                    sh ' kubectl get pods -n webapps'
+                }
+            }
+        }
+        
+
     }
 }
