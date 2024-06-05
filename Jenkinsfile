@@ -48,7 +48,14 @@ pipeline {
             steps{
                 withMaven(globalMavenSettingsConfig: 'maven', jdk: 'jdk17', maven: 'maven', mavenSettingsConfig: '', traceability: true) {
                 sh 'mvn clean deploy -DskipTests=true'
-}
+              }
+            }
+        }
+        stage('Building Docker image'){
+            steps{
+                withDockerRegistry(credentialsId: 'docker-cred', toolName: 'docker') {
+                    sh 'docker build -t amarnathvenkatam/Mission:latest .'
+                }
             }
         }
     }
