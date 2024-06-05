@@ -65,5 +65,14 @@ pipeline {
                 sh 'trivy image --format table -o trivy-image-reports.html amarnathvenkatam/mission:latest '
             }
         }
+        stage('Pusing Docker image to DockerHub'){
+            steps{
+                script{
+                    withDockerRegistry(credentialsId: 'docker-cred', toolName: 'docker') {
+                    sh 'docker push amarnathvenkatam/mission:latest'
+                }
+                }
+            }
+        }
     }
 }
