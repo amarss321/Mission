@@ -53,8 +53,10 @@ pipeline {
         }
         stage('Building Docker image'){
             steps{
-                withDockerRegistry(credentialsId: 'docker-cred', toolName: 'docker') {
+                script{
+                    withDockerRegistry(credentialsId: 'docker-cred', toolName: 'docker') {
                     sh 'docker build -t amarnathvenkatam/Mission:latest .'
+                }
                 }
             }
         }
