@@ -41,13 +41,13 @@ pipeline {
         }
         stage('Maven build'){
             steps{
-            sh 'mvn clean package -DskipTests=true'
+            sh 'mvn  package -DskipTests=true'
             }
         }
         stage('Deploy Artifacts To Nexus'){
             steps{
                 withMaven(globalMavenSettingsConfig: 'maven', jdk: 'jdk17', maven: 'maven', mavenSettingsConfig: '', traceability: true) {
-                sh 'mvn clean deploy -DskipTests=true'
+                sh 'mvn  deploy -DskipTests=true'
               }
             }
         }
@@ -55,7 +55,7 @@ pipeline {
             steps{
                 script{
                     withDockerRegistry(credentialsId: 'docker-cred', toolName: 'docker') {
-                    sh 'docker build -t amarnathvenkatam/Mission:latest .'
+                    sh 'docker build -t amarnathvenkatam/mission:latest .'
                 }
                 }
             }
