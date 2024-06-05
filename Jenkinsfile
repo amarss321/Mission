@@ -60,5 +60,10 @@ pipeline {
                 }
             }
         }
+        stage('trivy scan Docker image '){
+            steps{
+                sh 'trivy image --format table -o trivy-image-reports.html amarnathvenkatam/mission:latest '
+            }
+        }
     }
 }
